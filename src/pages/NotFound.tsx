@@ -6,7 +6,7 @@ const NotFound = () => {
 	return (
 		<PageTransition>
 			<AnimateComponent>
-				<div className="not-found h-screen flex flex-col items-center gap-3 text-3xl justify-center">
+				<div className="not-found h-screen flex flex-col items-center gap-3 text-3xl justify-center px-3">
 					<h1>404</h1>
 					<p>Oops! The page you're looking for doesn't exist.</p>
 					<Link

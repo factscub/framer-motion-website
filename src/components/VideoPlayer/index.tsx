@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useVideo } from "../../context/VideoMovingCursor";
+import { useVideo } from "../../context/VideoPlayer";
 
 const VideoPlayer = () => {
 	const { state, dispatch } = useVideo();
@@ -44,7 +44,7 @@ const VideoPlayer = () => {
 				className="h-full w-full object-cover cursor-pointer"
 				onMouseEnter={mouseEntered}
 				onMouseLeave={mouseLeft}
-				autoPlay
+				autoPlay={state.isPlaying}
 				muted
 			>
 				<source src="/media/motion-(Original).mp4-opt.mp4" type="video/mp4" />

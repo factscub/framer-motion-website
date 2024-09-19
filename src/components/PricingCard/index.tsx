@@ -4,7 +4,7 @@ import { PricingCardProps } from "../../types/types";
 
 const PricingCard = () => {
 	return (
-		<section className="bg-neutral-900 px-4 py-12 h-screen flex flex-col justify-center items-center">
+		<section className="bg-neutral-900 px-4 py-12 min-h-screen flex flex-col justify-center items-center">
 			<div className="grid grid-cols-1 sm:grid-cols-2 m-auto gap-6">
 				{pricingData.map((priceData) => (
 					<Card {...priceData} key={priceData.id} />

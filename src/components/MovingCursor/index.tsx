@@ -3,7 +3,7 @@ import { useState } from "react";
 import useMouse from "@react-hook/mouse-position";
 import { motion } from "framer-motion";
 import { FaPlay, FaPauseCircle } from "react-icons/fa";
-import { useVideo } from "../../context/VideoMovingCursor";
+import { useVideo } from "../../context/VideoPlayer";
 
 export default function MovingCursor({ children }: { children: ReactNode }) {
 	const [cursorVariant, setCursorVariant] = useState("default");
