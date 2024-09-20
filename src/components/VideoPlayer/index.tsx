@@ -46,6 +46,7 @@ const VideoPlayer = () => {
 				onMouseLeave={mouseLeft}
 				autoPlay={state.isPlaying}
 				muted
+				playsinline
 			>
 				<source src="/media/motion-(Original).mp4-opt.mp4" type="video/mp4" />
 				Your browser does not support the video tag.
