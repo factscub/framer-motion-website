@@ -2,11 +2,13 @@ import { ReactNode, useEffect, useRef } from "react";
 import { useState } from "react";
 import useMouse from "@react-hook/mouse-position";
 import { motion } from "framer-motion";
-import { FaPlay, FaPauseCircle } from "react-icons/fa";
 import { useVideo } from "../../context/VideoPlayer";
+import useWindowWidth from "../../hooks/useWindowWidth";
+import VideoCursor from "../VideoCursor";
 
 export default function MovingCursor({ children }: { children: ReactNode }) {
 	const [cursorVariant, setCursorVariant] = useState("default");
+	const windowWidth = useWindowWidth();
 
 	const ref = useRef(null);
 	const mouse = useMouse(ref, {
@@ -52,37 +54,32 @@ export default function MovingCursor({ children }: { children: ReactNode }) {
 	const { state } = useVideo();
 
 	useEffect(() => {
-		if (!state.mouseEntered) {
+		if (!mouse.isOver) {
+			setCursorVariant("hidden");
+		} else if (!state.mouseEntered) {
 			setCursorVariant("default");
 		} else {
 			setCursorVariant("video");
 		}
-	}, [state.mouseEntered]);
+	}, [mouse.isOver, state.mouseEntered]);
 
 	return (
 		<div ref={ref}>
-			<motion.div
-				variants={variants}
-				className="fixed z-50 flex flex-row content-center justify-center top-0 left-0 pointer-events-none text-white text-center"
-				animate={cursorVariant}
-				transition={spring}
-			>
-				{state.mouseEntered && <VideoCursor isPlaying={state.isPlaying} />}
-			</motion.div>
-			{children}
+			{windowWidth <= 768 ? (
+				children
+			) : (
+				<>
+					<motion.div
+						variants={variants}
+						className="fixed z-50 flex flex-row content-center justify-center top-0 left-0 pointer-events-none text-white text-center"
+						animate={cursorVariant}
+						transition={spring}
+					>
+						{state.mouseEntered && <VideoCursor />}
+					</motion.div>
+					{children}
+				</>
+			)}
 		</div>
 	);
 }
-
-const VideoCursor = ({ isPlaying }: { isPlaying: boolean }) => {
-	return (
-		<div className="text-center">
-			<div className="bg-gray-50 p-3 m-2 rounded-md">
-				{isPlaying ? <FaPauseCircle /> : <FaPlay />}
-			</div>
-			<span className="uppercase text-white">
-				{isPlaying ? "Pause" : "Play"}
-			</span>
-		</div>
-	);
-};

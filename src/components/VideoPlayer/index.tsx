@@ -1,8 +1,11 @@
 import { useRef } from "react";
 import { useVideo } from "../../context/VideoPlayer";
+import VideoCursor from "../VideoCursor";
+import useWindowWidth from "../../hooks/useWindowWidth";
 
 const VideoPlayer = () => {
 	const { state, dispatch } = useVideo();
+	const windowWidth = useWindowWidth();
 	const videoRef = useRef<HTMLVideoElement | null>(null);
 
 	const handlePlay = () => {
@@ -37,7 +40,12 @@ const VideoPlayer = () => {
 		}
 	};
 	return (
-		<div className="w-full h-full">
+		<div className="w-full h-full relative">
+			{windowWidth <= 768 && (
+				<div className="absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2">
+					<VideoCursor color="#000" />
+				</div>
+			)}
 			<video
 				onClick={togglePlaying}
 				ref={videoRef}
@@ -46,7 +54,7 @@ const VideoPlayer = () => {
 				onMouseLeave={mouseLeft}
 				autoPlay={state.isPlaying}
 				muted
-				playsinline
+				playsInline
 			>
 				<source src="/media/motion-(Original).mp4-opt.mp4" type="video/mp4" />
 				Your browser does not support the video tag.
